@@ -879,6 +879,29 @@ func TestParser(t *testing.T) {
                 2
             debugger
         `, nil)
+
+		// testing const
+  //       test(`
+		// 	const PI = 3.141593
+  //       `, nil)
+
+  		// testing let
+  //       test(`
+		// 	let x = 5;
+  //       `, nil)
+
+  		 // testing arrow functions
+  //       test(`
+		// 	let x = y => y + 1
+  //       `, nil)
+
+  //      	test(`
+		// 	let y = v => ({ even: v, odd: v + 1 })
+  //      	`, nil)
+
+  //      	test(`
+		// 	let z = (v, i) => v + i
+  //      	`, nil)
 	})
 }
 
