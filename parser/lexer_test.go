@@ -349,6 +349,38 @@ Second line \
 			token.RIGHT_BRACKET, "", 6,
 		)
 
+		// testing const 
+
+		test("const PI = 3.14", 
+			token.CONST, "const", 1,
+			token.IDENTIFIER, "PI", 7, 
+			token.ASSIGN, "", 10, 
+			token.NUMBER, "3.14", 12,
+		)
+
+		// testing let
+
+		// test("let x = 5", 
+		// 	token.LET, "let", 1,
+		// 	token.IDENTIFIER, "x", 5, 
+		// 	token.ASSIGN, "", 7, 
+		// 	token.NUMBER, "5", 9 ,
+		// )
+
+		// testing arrow functions 
+
+		// test("let x = y => y + 1", 
+		// 	token.LET, "let", 1,
+		// 	token.IDENTIFIER, "x", 5, 
+		// 	token.ASSIGN, "", 7, 
+		// 	token.IDENTIFIER, "y", 9 ,
+		// 	token.ARROW_FUNCTION, "=>", 11,
+		// 	token.IDENTIFIER, "y", 14,
+		// 	token.PLUS, "+", 16,
+		// 	token.NUMBER, "1", 18,
+		// )
+
+
 		// ILLEGAL
 
 		test(`3ea`,
