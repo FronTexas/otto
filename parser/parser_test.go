@@ -458,39 +458,39 @@ func TestParserErr(t *testing.T) {
 		{ // for ES6, these identifiers are not allowed to use since they are a reserved keywords
 
 			test(`implements`, "(anonymous): Line 1:1 Unexpected reserved word")
-			test(`abc.implements = 1`, "(anonymous): Line 1:5 Unexpected reserved word")
+			test(`abc.implements = 1`, nil)
 			test(`var implements;`, "(anonymous): Line 1:5 Unexpected reserved word")
 
 			test(`interface`, "(anonymous): Line 1:1 Unexpected reserved word")
-			test(`abc.interface = 1`, "(anonymous): Line 1:5 Unexpected reserved word")
+			test(`abc.interface = 1`, nil)
 			test(`var interface;`, "(anonymous): Line 1:5 Unexpected reserved word")
 
 			test(`let`, "(anonymous): Line 1:1 Unexpected reserved word")
-			test(`abc.let = 1`, "(anonymous): Line 1:5 Unexpected reserved word")
+			test(`abc.let = 1`, nil)
 			test(`var let;`, "(anonymous): Line 1:5 Unexpected reserved word")
 
 			test(`package`, "(anonymous): Line 1:1 Unexpected reserved word")
-			test(`abc.package = 1`, "(anonymous): Line 1:5 Unexpected reserved word")
+			test(`abc.package = 1`, nil)
 			test(`var package;`, "(anonymous): Line 1:5 Unexpected reserved word")
 
 			test(`private`, "(anonymous): Line 1:1 Unexpected reserved word")
-			test(`abc.private = 1`, "(anonymous): Line 1:5 Unexpected reserved word")
+			test(`abc.private = 1`, nil)
 			test(`var private;`, "(anonymous): Line 1:5 Unexpected reserved word")
 
 			test(`protected`, "(anonymous): Line 1:1 Unexpected reserved word")
-			test(`abc.protected = 1`, "(anonymous): Line 1:5 Unexpected reserved word")
+			test(`abc.protected = 1`, nil)
 			test(`var protected;`, "(anonymous): Line 1:5 Unexpected reserved word")
 
 			test(`public`, "(anonymous): Line 1:1 Unexpected reserved word")
-			test(`abc.public = 1`, "(anonymous): Line 1:5 Unexpected reserved word")
+			test(`abc.public = 1`, nil)
 			test(`var public;`, "(anonymous): Line 1:5 Unexpected reserved word")
 
 			test(`static`, "(anonymous): Line 1:1 Unexpected reserved word")
-			test(`abc.static = 1`, "(anonymous): Line 1:5 Unexpected reserved word")
+			test(`abc.static = 1`, nil)
 			test(`var static;`, "(anonymous): Line 1:5 Unexpected reserved word")
 
 			test(`yield`, "(anonymous): Line 1:1 Unexpected reserved word")
-			test(`abc.yield = 1`, "(anonymous): Line 1:5 Unexpected reserved word")
+			test(`abc.yield = 1`, nil)
 			test(`var yield;`, "(anonymous): Line 1:5 Unexpected reserved word")
 		}
 	})
