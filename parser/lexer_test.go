@@ -369,16 +369,31 @@ Second line \
 
 		// testing arrow functions 
 
-		// test("let x = y => y + 1", 
-		// 	token.LET, "let", 1,
-		// 	token.IDENTIFIER, "x", 5, 
-		// 	token.ASSIGN, "", 7, 
-		// 	token.IDENTIFIER, "y", 9 ,
-		// 	token.ARROW_FUNCTION, "=>", 11,
-		// 	token.IDENTIFIER, "y", 14,
-		// 	token.PLUS, "+", 16,
-		// 	token.NUMBER, "1", 18,
-		// )
+		test("let x = y => y + 1", 
+			token.KEYWORD, "let", 1,
+			token.IDENTIFIER, "x", 5, 
+			token.ASSIGN, "", 7, 
+			token.IDENTIFIER, "y", 9 ,
+			token.ARROW_FUNCTION, "", 11,
+			token.IDENTIFIER, "y", 14,
+			token.PLUS, "", 16,
+			token.NUMBER, "1", 18,
+		)
+
+		test("let some_function = (v, i) => v + i", 
+			token.KEYWORD, "let", 1,
+			token.IDENTIFIER, "some_function", 5, 
+			token.ASSIGN, "", 19, 
+			token.LEFT_PARENTHESIS, "", 21, 
+			token.IDENTIFIER, "v", 22, 
+			token.COMMA, "", 23, 
+			token.IDENTIFIER, "i", 25,
+			token.RIGHT_PARENTHESIS, "", 26,
+			token.ARROW_FUNCTION, "", 28, 
+			token.IDENTIFIER, "v", 31, 
+			token.PLUS, "", 33, 
+			token.IDENTIFIER, "i", 35,
+		)
 
 
 		// ILLEGAL
