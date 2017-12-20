@@ -309,41 +309,37 @@ var keywordTable = map[string]_keyword{
 	"implements": _keyword{
 		token:         KEYWORD,
 		futureKeyword: true,
-		strict:        true,
 	},
 	"interface": _keyword{
 		token:         KEYWORD,
 		futureKeyword: true,
-		strict:        true,
 	},
 	"let": _keyword{
 		token:         KEYWORD,
 		futureKeyword: true,
-		strict:        true,
 	},
 	"package": _keyword{
 		token:         KEYWORD,
 		futureKeyword: true,
-		strict:        true,
 	},
 	"private": _keyword{
 		token:         KEYWORD,
 		futureKeyword: true,
-		strict:        true,
 	},
 	"protected": _keyword{
 		token:         KEYWORD,
 		futureKeyword: true,
-		strict:        true,
 	},
 	"public": _keyword{
 		token:         KEYWORD,
 		futureKeyword: true,
-		strict:        true,
 	},
 	"static": _keyword{
 		token:         KEYWORD,
 		futureKeyword: true,
-		strict:        true,
+	},
+	"yield": _keyword{
+		token:         KEYWORD,
+		futureKeyword: true,
 	},
 }
