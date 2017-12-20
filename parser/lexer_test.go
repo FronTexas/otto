@@ -352,7 +352,7 @@ Second line \
 		// testing const 
 
 		test("const PI = 3.14", 
-			token.CONST, "const", 1,
+			token.KEYWORD, "const", 1,
 			token.IDENTIFIER, "PI", 7, 
 			token.ASSIGN, "", 10, 
 			token.NUMBER, "3.14", 12,
@@ -360,12 +360,12 @@ Second line \
 
 		// testing let
 
-		// test("let x = 5", 
-		// 	token.LET, "let", 1,
-		// 	token.IDENTIFIER, "x", 5, 
-		// 	token.ASSIGN, "", 7, 
-		// 	token.NUMBER, "5", 9 ,
-		// )
+		test("let x = 5", 
+			token.KEYWORD, "let", 1,
+			token.IDENTIFIER, "x", 5, 
+			token.ASSIGN, "", 7, 
+			token.NUMBER, "5", 9 ,
+		)
 
 		// testing arrow functions 
 
