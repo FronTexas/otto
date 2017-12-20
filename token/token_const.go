@@ -109,6 +109,7 @@ const (
 
 	INSTANCEOF
 	lastKeyword
+	ARROW_FUNCTION // => 
 )
 
 var token2string = [...]string{
@@ -197,6 +198,7 @@ var token2string = [...]string{
 	CONTINUE:                    "continue",
 	DEBUGGER:                    "debugger",
 	INSTANCEOF:                  "instanceof",
+	ARROW_FUNCTION:				 "=>",
 }
 
 var keywordTable = map[string]_keyword{
