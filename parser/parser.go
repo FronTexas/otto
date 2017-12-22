@@ -248,9 +248,6 @@ func (self *_parser) slice(idx0, idx1 file.Idx) string {
 func (self *_parser) parse() (*ast.Program, error) {
 	self.next()
 	program := self.parseProgram()
-	if false {
-		self.errors.Sort()
-	}
 
 	if self.mode&StoreComments != 0 {
 		self.comments.CommentMap.AddComments(program, self.comments.FetchAll(), ast.TRAILING)
