@@ -352,7 +352,7 @@ Second line \
 		// testing const 
 
 		test("const PI = 3.14", 
-			token.KEYWORD, "const", 1,
+			token.CONST, "const", 1,
 			token.IDENTIFIER, "PI", 7, 
 			token.ASSIGN, "", 10, 
 			token.NUMBER, "3.14", 12,
