@@ -269,7 +269,7 @@ func (self *_parser) scan() (tkn token.Token, literal string, idx file.Idx) {
 			case '>':
 				tkn = self.switch6(token.GREATER, token.GREATER_OR_EQUAL, '>', token.SHIFT_RIGHT, token.SHIFT_RIGHT_ASSIGN, '>', token.UNSIGNED_SHIFT_RIGHT, token.UNSIGNED_SHIFT_RIGHT_ASSIGN)
 			case '=':
-				tkn = self.decide_between_assign_equal_or_arrow_function()
+				tkn = self.decideBetweenAssignEqualOrArrowFunction()
 				if tkn == token.EQUAL && self.chr == '=' {
 					self.read()
 					tkn = token.STRICT_EQUAL
@@ -371,7 +371,7 @@ func (self *_parser) switch6(tkn0, tkn1 token.Token, chr2 rune, tkn2, tkn3 token
 	return tkn0
 }
 
-func (self *_parser) decide_between_assign_equal_or_arrow_function() token.Token {
+func (self *_parser) decideBetweenAssignEqualOrArrowFunction() token.Token {
 	if self.chr == '=' {
 		self.read()
 		return token.EQUAL
