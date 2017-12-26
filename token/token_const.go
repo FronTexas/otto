@@ -111,6 +111,7 @@ const (
 	lastKeyword
 	ARROW_FUNCTION // => 
 	CONST // const
+	LET // let
 )
 
 var token2string = [...]string{
@@ -201,6 +202,7 @@ var token2string = [...]string{
 	INSTANCEOF:                  "instanceof",
 	ARROW_FUNCTION:				 "=>",
 	CONST:                       "const",
+	LET:                         "let",
 }
 
 var keywordTable = map[string]_keyword{
@@ -318,8 +320,7 @@ var keywordTable = map[string]_keyword{
 		futureKeyword: true,
 	},
 	"let": _keyword{
-		token:         KEYWORD,
-		futureKeyword: true,
+		token: LET,
 	},
 	"package": _keyword{
 		token:         KEYWORD,
