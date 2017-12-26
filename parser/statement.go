@@ -95,7 +95,9 @@ func (self *_parser) parseStatement() ast.Statement {
 	case token.TRY:
 		return self.parseTryStatement()
 	case token.CONST:
-		return self.parseLexicalDeclaration()
+		return self.parseLexicalDeclaration(token.CONST)
+	case token.LET: 
+		return self.parseLexicalDeclaration(token.LET)
 	}
 
 	var comments []*ast.Comment
@@ -669,13 +671,14 @@ func (self *_parser) parseVariableStatement() *ast.VariableStatement {
 	return statement
 }
 
-func (self *_parser) parseLexicalDeclaration() *ast.LexicalDeclarationStatement {
+func (self *_parser) parseLexicalDeclaration(expectedToken token.Token) *ast.LexicalDeclarationStatement {
 	var comments []*ast.Comment
 	if self.mode&StoreComments != 0 {
 		comments = self.comments.FetchAll()
 	}
 
-	idx := self.expect(token.CONST)
+	idx := self.expect(expectedToken)
+
 
 	list := self.parseBindingList(idx)
 
