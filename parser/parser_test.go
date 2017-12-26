@@ -464,9 +464,9 @@ func TestParserErr(t *testing.T) {
 			test(`abc.interface = 1`, nil)
 			test(`var interface;`, "(anonymous): Line 1:5 Unexpected reserved word")
 
-			test(`let`, "(anonymous): Line 1:1 Unexpected reserved word")
+			test(`let`, "(anonymous): Line 1:4 Unexpected end of input")
 			test(`abc.let = 1`, nil)
-			test(`var let;`, "(anonymous): Line 1:5 Unexpected reserved word")
+			test(`var let;`, "(anonymous): Line 1:5 Unexpected token let")
 
 			test(`package`, "(anonymous): Line 1:1 Unexpected reserved word")
 			test(`abc.package = 1`, nil)
@@ -884,9 +884,9 @@ func TestParser(t *testing.T) {
         `, nil)
 
   		// testing let
-  //       test(`
-		// 	let x = 5;
-  //       `, nil)
+        test(`
+			let x = 5;
+        `, nil)
 
   		 // testing arrow functions
   //       test(`
