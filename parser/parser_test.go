@@ -5,7 +5,6 @@ import (
 	"regexp"
 	"strings"
 	"testing"
-
 	"github.com/robertkrimen/otto/ast"
 	"github.com/robertkrimen/otto/file"
 	"github.com/robertkrimen/otto/underscore"
@@ -430,7 +429,7 @@ func TestParserErr(t *testing.T) {
 			test("abc.class = 1", nil)
 			test("var class;", "(anonymous): Line 1:5 Unexpected reserved word")
 
-			test("const", "(anonymous): Line 1:1 Unexpected token const")
+			test("const", "(anonymous): Line 1:6 Unexpected end of input")
 			test("abc.const = 1", nil)
 			test("var const;", "(anonymous): Line 1:5 Unexpected token const")
 
@@ -880,10 +879,9 @@ func TestParser(t *testing.T) {
             debugger
         `, nil)
 
-		// testing const
-   //      test(`
-			// const PI = 3.141593
-   //      `, nil)
+		test(`
+			const PI = 3.141593
+        `, nil)
 
   		// testing let
   //       test(`
