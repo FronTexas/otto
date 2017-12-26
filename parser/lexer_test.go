@@ -361,7 +361,7 @@ Second line \
 		// testing let
 
 		test("let x = 5", 
-			token.KEYWORD, "let", 1,
+			token.LET, "let", 1,
 			token.IDENTIFIER, "x", 5, 
 			token.ASSIGN, "", 7, 
 			token.NUMBER, "5", 9 ,
@@ -370,7 +370,7 @@ Second line \
 		// testing arrow functions 
 
 		test("let x = y => y + 1", 
-			token.KEYWORD, "let", 1,
+			token.LET, "let", 1,
 			token.IDENTIFIER, "x", 5, 
 			token.ASSIGN, "", 7, 
 			token.IDENTIFIER, "y", 9 ,
@@ -381,7 +381,7 @@ Second line \
 		)
 
 		test("let some_function = (v, i) => v + i", 
-			token.KEYWORD, "let", 1,
+			token.LET, "let", 1,
 			token.IDENTIFIER, "some_function", 5, 
 			token.ASSIGN, "", 19, 
 			token.LEFT_PARENTHESIS, "", 21, 
