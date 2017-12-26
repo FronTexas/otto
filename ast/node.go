@@ -177,6 +177,12 @@ type (
 		Idx         file.Idx
 		Initializer Expression
 	}
+
+	LexicalBindingExpression struct {
+		Name string 
+		Idx file.Idx 
+		Initializer Expression
+	}
 )
 
 // _expressionNode
@@ -203,6 +209,8 @@ func (*StringLiteral) _expressionNode()         {}
 func (*ThisExpression) _expressionNode()        {}
 func (*UnaryExpression) _expressionNode()       {}
 func (*VariableExpression) _expressionNode()    {}
+func (*LexicalBindingExpression) _expressionNode()        {}
+
 
 // ========= //
 // Statement //
@@ -334,6 +342,11 @@ type (
 		Object Expression
 		Body   Statement
 	}
+
+	LexicalDeclarationStatement struct {
+		LetOrConst file.Idx
+		List []Expression
+	}
 )
 
 // _statementNode
@@ -359,6 +372,8 @@ func (*TryStatement) _statementNode()        {}
 func (*VariableStatement) _statementNode()   {}
 func (*WhileStatement) _statementNode()      {}
 func (*WithStatement) _statementNode()       {}
+func (*LexicalDeclarationStatement) _statementNode()       {}
+
 
 // =========== //
 // Declaration //
@@ -378,12 +393,20 @@ type (
 		Var  file.Idx
 		List []*VariableExpression
 	}
+
+	LexicalBindingDeclaration struct {
+		LetOrConst file.Idx 
+		List []*LexicalBindingExpression
+
+	}
 )
 
 // _declarationNode
 
 func (*FunctionDeclaration) _declarationNode() {}
 func (*VariableDeclaration) _declarationNode() {}
+func (*LexicalBindingDeclaration) _declarationNode() {}
+
 
 // ==== //
 // Node //
@@ -425,6 +448,7 @@ func (self *StringLiteral) Idx0() file.Idx         { return self.Idx }
 func (self *ThisExpression) Idx0() file.Idx        { return self.Idx }
 func (self *UnaryExpression) Idx0() file.Idx       { return self.Idx }
 func (self *VariableExpression) Idx0() file.Idx    { return self.Idx }
+func (self *LexicalBindingExpression) Idx0() file.Idx        { return self.Idx }
 
 func (self *BadStatement) Idx0() file.Idx        { return self.From }
 func (self *BlockStatement) Idx0() file.Idx      { return self.LeftBrace }
@@ -448,6 +472,8 @@ func (self *TryStatement) Idx0() file.Idx        { return self.Try }
 func (self *VariableStatement) Idx0() file.Idx   { return self.Var }
 func (self *WhileStatement) Idx0() file.Idx      { return self.While }
 func (self *WithStatement) Idx0() file.Idx       { return self.With }
+func (self *LexicalDeclarationStatement) Idx0() file.Idx       { return self.LetOrConst }
+
 
 // ==== //
 // Idx1 //
@@ -486,6 +512,13 @@ func (self *VariableExpression) Idx1() file.Idx {
 	return self.Initializer.Idx1()
 }
 
+func (self *LexicalBindingExpression) Idx1() file.Idx { 
+	if self.Initializer == nil {
+		return file.Idx(int(self.Idx) + len(self.Name) + 1)
+	}
+	return self.Initializer.Idx1()
+}
+
 func (self *BadStatement) Idx1() file.Idx        { return self.To }
 func (self *BlockStatement) Idx1() file.Idx      { return self.RightBrace + 1 }
 func (self *BranchStatement) Idx1() file.Idx     { return self.Idx }
@@ -513,3 +546,5 @@ func (self *TryStatement) Idx1() file.Idx      { return self.Try }
 func (self *VariableStatement) Idx1() file.Idx { return self.List[len(self.List)-1].Idx1() }
 func (self *WhileStatement) Idx1() file.Idx    { return self.Body.Idx1() }
 func (self *WithStatement) Idx1() file.Idx     { return self.Body.Idx1() }
+func (self *LexicalDeclarationStatement) Idx1() file.Idx { return self.List[len(self.List)-1].Idx1() }
+
