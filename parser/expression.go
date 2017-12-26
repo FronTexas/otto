@@ -2,7 +2,6 @@ package parser
 
 import (
 	"regexp"
-
 	"github.com/robertkrimen/otto/ast"
 	"github.com/robertkrimen/otto/file"
 	"github.com/robertkrimen/otto/token"
@@ -234,6 +233,71 @@ func (self *_parser) parseVariableDeclarationList(var_ file.Idx) []ast.Expressio
 	})
 
 	return list
+}
+
+func (self *_parser) parseBindingList(var_ file.Idx) []ast.Expression {
+	var bindingList []*ast.LexicalBindingExpression
+	var list []ast.Expression
+
+	for { 
+		if self.mode&StoreComments != 0 {
+			self.comments.MarkComments(ast.LEADING)
+		}
+
+		decl := self.parseLexicalBindingExpression(&bindingList)
+		list = append(list, decl)
+
+		if self.token != token.COMMA {
+			break
+		}
+
+		if self.mode&StoreComments != 0 {
+			self.comments.Unset()
+		}
+		self.next()
+	}
+
+	self.scope.declare(&ast.LexicalBindingDeclaration{
+		LetOrConst: var_, 
+		List: bindingList, 
+	})
+
+	return list
+}
+
+func (self *_parser) parseLexicalBindingExpression(bindingList *[]*ast.LexicalBindingExpression) ast.Expression {
+	
+	if self.token != token.IDENTIFIER {
+		idx := self.expect(token.IDENTIFIER)
+		self.nextStatement()
+		return &ast.BadExpression{From: idx, To: self.idx}
+	}
+
+	literal := self.literal
+	idx := self.idx
+	self.next()
+	
+	node := &ast.LexicalBindingExpression{
+		Name: literal, 
+		Idx: idx,
+	}
+
+	if self.mode&StoreComments != 0 {
+		self.comments.SetExpression(node)
+	}
+
+	if bindingList != nil {
+		*bindingList = append(*bindingList, node)
+	}
+
+	if self.token == token.ASSIGN {
+		if self.mode&StoreComments != 0 {
+			self.comments.Unset()
+		}
+		self.next()
+		node.Initializer = self.parseAssignmentExpression()
+	}
+	return node
 }
 
 func (self *_parser) parseObjectPropertyKey() (string, string) {
