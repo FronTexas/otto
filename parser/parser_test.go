@@ -8,6 +8,8 @@ import (
 	"github.com/robertkrimen/otto/ast"
 	"github.com/robertkrimen/otto/file"
 	"github.com/robertkrimen/otto/underscore"
+	"github.com/davecgh/go-spew/spew"
+	// "fmt"
 )
 
 func firstErr(err error) error {
@@ -888,10 +890,16 @@ func TestParser(t *testing.T) {
 			let x = 5;
         `, nil)
 
-  		 // testing arrow functions
-  //       test(`
-		// 	let x = y => y + 1
-  //       `, nil)
+        spew.Dump(test(`
+            var abc = function(a, b, c){
+            	var x = 69
+            }
+        `, nil))
+
+  	// 	 // testing arrow functions
+   //      test(`
+			// let x = y => y + 1
+   //      `, nil)
 
   //      	test(`
 		// 	let y = v => ({ even: v, odd: v + 1 })

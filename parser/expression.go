@@ -579,7 +579,6 @@ func (self *_parser) parseLeftHandSideExpression() ast.Expression {
 }
 
 func (self *_parser) parseLeftHandSideExpressionAllowCall() ast.Expression {
-
 	allowIn := self.scope.allowIn
 	self.scope.allowIn = true
 	defer func() {
@@ -665,7 +664,6 @@ func (self *_parser) parsePostfixExpression() ast.Expression {
 }
 
 func (self *_parser) parseUnaryExpression() ast.Expression {
-
 	switch self.token {
 	case token.PLUS, token.MINUS, token.NOT, token.BITWISE_NOT:
 		fallthrough
@@ -858,6 +856,7 @@ func (self *_parser) parseBitwiseAndExpression() ast.Expression {
 	next := self.parseEqualityExpression
 	left := next()
 
+
 	for self.token == token.AND {
 		if self.mode&StoreComments != 0 {
 			self.comments.Unset()
@@ -878,7 +877,6 @@ func (self *_parser) parseBitwiseAndExpression() ast.Expression {
 func (self *_parser) parseBitwiseExclusiveOrExpression() ast.Expression {
 	next := self.parseBitwiseAndExpression
 	left := next()
-
 	for self.token == token.EXCLUSIVE_OR {
 		if self.mode&StoreComments != 0 {
 			self.comments.Unset()
@@ -942,6 +940,7 @@ func (self *_parser) parseLogicalOrExpression() ast.Expression {
 	next := self.parseLogicalAndExpression
 	left := next()
 
+
 	for self.token == token.LOGICAL_OR {
 		if self.mode&StoreComments != 0 {
 			self.comments.Unset()
@@ -987,6 +986,7 @@ func (self *_parser) parseConditionlExpression() ast.Expression {
 
 func (self *_parser) parseAssignmentExpression() ast.Expression {
 	left := self.parseConditionlExpression()
+
 	var operator token.Token
 	switch self.token {
 	case token.ASSIGN:
@@ -1046,6 +1046,47 @@ func (self *_parser) parseAssignmentExpression() ast.Expression {
 
 	return left
 }
+/*
+func (self *_parser) parseArrowFunction() ast.Expression {
+	node := &ast.ArrowFunction{
+		ArrowParameters: self.parseArrowParameters(), 
+		ArrowOperator: self.idx, 
+		ConciseBody: self.parseConciseBody(),
+	}
+	return node
+}
+
+func (self *_parser) parseArrowParameters() ast.Expression {
+	if self.token == token.IDENTIFIER { 
+		return self.parseIdentifier()
+	}
+
+	if self.token == token.LEFT_PARENTHESIS { 
+		return self.parseCoverParenthesizedExpressionAndArrowParameterList()
+	}
+}
+
+
+func (self *_parser) parseCoverParenthesizedExpressionAndArrowParameterList() ast.Expression {
+	idx0 := self.expect(token.LEFT_PARENTHESIS) 
+	for self.token != token.RIGHT_PARENTHESIS && self.token != token.EOF { 
+		Expression = self.parseExpression()
+	}
+	idx1 := self.expect(token.RIGHT_PARENTHESIS)
+	
+	return &ast.CoverParenthesizedExpressionAndArrowParameterList{
+		LeftParenthesis: idx0, 
+		RightParenthesis: idx1, 
+		Expression: Expression, 	
+	}
+}
+
+func (self *_parser) parseConciseBody() ast.Expression { 
+	// TODO: Figure out how to do look ahead 
+	// TODO: if look_ahead != token.LEFT_BRACES, proceed to parse AssignmentExpression 
+	idx0 := self.expect(token.LEFT_BRACES)
+}
+*/
 
 func (self *_parser) parseExpression() ast.Expression {
 	next := self.parseAssignmentExpression
