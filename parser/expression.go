@@ -986,75 +986,85 @@ func (self *_parser) parseConditionlExpression() ast.Expression {
 
 func (self *_parser) parseAssignmentExpression() ast.Expression {
 	left := self.parseConditionlExpression()
-
-	var operator token.Token
-	switch self.token {
-	case token.ASSIGN:
-		operator = self.token
-	case token.ADD_ASSIGN:
-		operator = token.PLUS
-	case token.SUBTRACT_ASSIGN:
-		operator = token.MINUS
-	case token.MULTIPLY_ASSIGN:
-		operator = token.MULTIPLY
-	case token.QUOTIENT_ASSIGN:
-		operator = token.SLASH
-	case token.REMAINDER_ASSIGN:
-		operator = token.REMAINDER
-	case token.AND_ASSIGN:
-		operator = token.AND
-	case token.AND_NOT_ASSIGN:
-		operator = token.AND_NOT
-	case token.OR_ASSIGN:
-		operator = token.OR
-	case token.EXCLUSIVE_OR_ASSIGN:
-		operator = token.EXCLUSIVE_OR
-	case token.SHIFT_LEFT_ASSIGN:
-		operator = token.SHIFT_LEFT
-	case token.SHIFT_RIGHT_ASSIGN:
-		operator = token.SHIFT_RIGHT
-	case token.UNSIGNED_SHIFT_RIGHT_ASSIGN:
-		operator = token.UNSIGNED_SHIFT_RIGHT
-	}
-
-	if operator != 0 {
-		idx := self.idx
-		if self.mode&StoreComments != 0 {
-			self.comments.Unset()
-		}
+	if (self.token == token.ARROW_OPERATOR) {
 		self.next()
-		switch left.(type) {
-		case *ast.Identifier, *ast.DotExpression, *ast.BracketExpression:
-		default:
-			self.error(left.Idx0(), "Invalid left-hand side in assignment")
-			self.nextStatement()
-			return &ast.BadExpression{From: idx, To: self.idx}
+		return self.parseArrowFunctionExpression(left.(*ast.ParameterList))
+	} else {
+		var operator token.Token
+		switch self.token {
+		case token.ASSIGN:
+			operator = self.token
+		case token.ADD_ASSIGN:
+			operator = token.PLUS
+		case token.SUBTRACT_ASSIGN:
+			operator = token.MINUS
+		case token.MULTIPLY_ASSIGN:
+			operator = token.MULTIPLY
+		case token.QUOTIENT_ASSIGN:
+			operator = token.SLASH
+		case token.REMAINDER_ASSIGN:
+			operator = token.REMAINDER
+		case token.AND_ASSIGN:
+			operator = token.AND
+		case token.AND_NOT_ASSIGN:
+			operator = token.AND_NOT
+		case token.OR_ASSIGN:
+			operator = token.OR
+		case token.EXCLUSIVE_OR_ASSIGN:
+			operator = token.EXCLUSIVE_OR
+		case token.SHIFT_LEFT_ASSIGN:
+			operator = token.SHIFT_LEFT
+		case token.SHIFT_RIGHT_ASSIGN:
+			operator = token.SHIFT_RIGHT
+		case token.UNSIGNED_SHIFT_RIGHT_ASSIGN:
+			operator = token.UNSIGNED_SHIFT_RIGHT
 		}
 
-		exp := &ast.AssignExpression{
-			Left:     left,
-			Operator: operator,
-			Right:    self.parseAssignmentExpression(),
-		}
+		if operator != 0 {
+			idx := self.idx
+			if self.mode&StoreComments != 0 {
+				self.comments.Unset()
+			}
+			self.next()
+			switch left.(type) {
+			case *ast.Identifier, *ast.DotExpression, *ast.BracketExpression:
+			default:
+				self.error(left.Idx0(), "Invalid left-hand side in assignment")
+				self.nextStatement()
+				return &ast.BadExpression{From: idx, To: self.idx}
+			}
 
-		if self.mode&StoreComments != 0 {
-			self.comments.SetExpression(exp)
-		}
+			exp := &ast.AssignExpression{
+				Left:     left,
+				Operator: operator,
+				Right:    self.parseAssignmentExpression(),
+			}
 
-		return exp
+			if self.mode&StoreComments != 0 {
+				self.comments.SetExpression(exp)
+			}
+
+			return exp
+		}
 	}
-
 	return left
 }
-/*
-func (self *_parser) parseArrowFunction() ast.Expression {
-	node := &ast.ArrowFunction{
-		ArrowParameters: self.parseArrowParameters(), 
-		ArrowOperator: self.idx, 
-		ConciseBody: self.parseConciseBody(),
-	}
-	return node
+
+func (self *_parser) parseArrowFunctionExpression(parameterList *ast.ParameterList) ast.Expression {
+	// if self.token == token.LEFT_BRACE {
+		return &ast.ArrowFunctionExpression{
+			ParameterList: parameterList,
+			Body: self.parseBlockStatement(),
+		}
+	// }
+	// TODO: Figure out how to make Body to be allowed to accept both AssignmentExpression AND Block Statement
+	/*
+	return &ast.ArrowFunctionExpression{
+		ParameterList: parameterList,
+		Body: self.parseAssignmentExpression(),
+	}*/
 }
+/*
 
 func (self *_parser) parseArrowParameters() ast.Expression {
 	if self.token == token.IDENTIFIER { 
