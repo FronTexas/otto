@@ -109,7 +109,7 @@ const (
 
 	INSTANCEOF
 	lastKeyword
-	ARROW_FUNCTION // => 
+	ARROW_OPERATOR // => 
 	CONST // const
 	LET // let
 )
@@ -200,7 +200,7 @@ var token2string = [...]string{
 	CONTINUE:                    "continue",
 	DEBUGGER:                    "debugger",
 	INSTANCEOF:                  "instanceof",
-	ARROW_FUNCTION:				 "=>",
+	ARROW_OPERATOR:				 "=>",
 	CONST:                       "const",
 	LET:                         "let",
 }

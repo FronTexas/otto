@@ -379,7 +379,7 @@ func (self *_parser) decideBetweenAssignEqualOrArrowFunction() token.Token {
 
 	if self.chr == '>' {
 		self.read()
-		return token.ARROW_FUNCTION
+		return token.ARROW_OPERATOR
 	}
 
 	return token.ASSIGN
