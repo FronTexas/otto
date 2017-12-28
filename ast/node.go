@@ -183,6 +183,12 @@ type (
 		Idx file.Idx 
 		Initializer Expression
 	}
+
+	ArrowFunctionExpression struct {
+		ParameterList *ParameterList 
+		Idx 	       file.Idx
+		Body		   Statement
+	}
 )
 
 // _expressionNode
@@ -210,7 +216,8 @@ func (*ThisExpression) _expressionNode()        {}
 func (*UnaryExpression) _expressionNode()       {}
 func (*VariableExpression) _expressionNode()    {}
 func (*LexicalBindingExpression) _expressionNode()        {}
-
+func (*ArrowFunctionExpression) _expressionNode()        {}
+func (*ParameterList) _expressionNode()        {}
 
 // ========= //
 // Statement //
@@ -449,6 +456,7 @@ func (self *ThisExpression) Idx0() file.Idx        { return self.Idx }
 func (self *UnaryExpression) Idx0() file.Idx       { return self.Idx }
 func (self *VariableExpression) Idx0() file.Idx    { return self.Idx }
 func (self *LexicalBindingExpression) Idx0() file.Idx        { return self.Idx }
+func (self *ArrowFunctionExpression) Idx0() file.Idx        { return self.Idx }
 
 func (self *BadStatement) Idx0() file.Idx        { return self.From }
 func (self *BlockStatement) Idx0() file.Idx      { return self.LeftBrace }
@@ -473,6 +481,9 @@ func (self *VariableStatement) Idx0() file.Idx   { return self.Var }
 func (self *WhileStatement) Idx0() file.Idx      { return self.While }
 func (self *WithStatement) Idx0() file.Idx       { return self.With }
 func (self *LexicalDeclarationStatement) Idx0() file.Idx       { return self.LetOrConst }
+func (self *ParameterList) Idx0() file.Idx        { return self.Opening }
+
+
 
 
 // ==== //
@@ -518,6 +529,9 @@ func (self *LexicalBindingExpression) Idx1() file.Idx {
 	}
 	return self.Initializer.Idx1()
 }
+func (self *ArrowFunctionExpression) Idx1() file.Idx  { return self.Body.Idx1() }
+func (self *ParameterList) Idx1() file.Idx        { return self.Closing }
+
 
 func (self *BadStatement) Idx1() file.Idx        { return self.To }
 func (self *BlockStatement) Idx1() file.Idx      { return self.RightBrace + 1 }
